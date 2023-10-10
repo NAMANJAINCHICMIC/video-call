@@ -1,0 +1,35 @@
+<!-- Write table component code here -->
+<table>
+    <thead>
+      <!-- ! Review: Use ngFor here (it's a big mistake.) -->
+        <tr *ngIf="let header of headers">
+            <th>{{header}}</th>
+            <span class="sort">
+                {{header.value}}
+                <div class="sorting" *ngIf="header.sorting">
+                    <i (click)="updateSorting(header.key,-1)"
+                        [class]="(pagination.sortDirection==-1&&pagination.sortKey==header.key)?'active':''">
+                        <img src="assets/img/icons/arw_up.png" alt="sort" />
+                    </i>
+                    <i (click)="updateSorting(header.key,1)"
+                        [class]="(pagination.sortDirection==1&&pagination.sortKey==header.key)?'active':''">
+                        <img src="assets/img/icons/arw_down.png" alt="sort" />
+                    </i>
+                </div>
+            </span>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="records.length; else noData">
+      <!-- ! Review: Use ngFor here (it's a big mistake.) -->
+            <tr *ngIf="let record of records">
+                <td>{{record}}</td>
+            </tr>
+        </ng-container>
+        <ng-template #noData>
+            <tr>
+                <td>{{"No Data Available"}}</td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>
